@@ -7,6 +7,8 @@ import {
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query';
+import { Web3ReactProvider } from '@web3-react/core';
+import { ethers } from 'ethers';
 import { NextPage } from 'next';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
@@ -19,6 +21,12 @@ type Page<P = Record<string, never>> = NextPage<P> & {
 
 type Props = AppProps<{ dehydratedState: unknown }> & {
   Component: Page<{ dehydratedState: unknown }>;
+};
+
+const getLibrary = (provider: any) => {
+  const library = new ethers.BrowserProvider(provider);
+  library.pollingInterval = 8000; // frequency provider is polling
+  return library;
 };
 
 function MyApp({ Component, pageProps }: Props) {
@@ -41,7 +49,9 @@ function MyApp({ Component, pageProps }: Props) {
 
         <QueryClientProvider client={queryClient}>
           <Hydrate state={pageProps.dehydratedState}>
-            {getLayout(<Component {...pageProps} />)}
+            <Web3ReactProvider getLibrary={getLibrary}>
+              {getLayout(<Component {...pageProps} />)}
+            </Web3ReactProvider>
           </Hydrate>
         </QueryClientProvider>
       </div>
