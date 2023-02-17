@@ -12,6 +12,7 @@ import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import React, { ReactElement, ReactNode } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
+import { GNB } from 'src/components/nav/GNB';
 
 type Page<P = Record<string, never>> = NextPage<P> & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -41,6 +42,7 @@ function MyApp({ Component, pageProps }: Props) {
 
         <QueryClientProvider client={queryClient}>
           <Hydrate state={pageProps.dehydratedState}>
+            <GNB />
             {getLayout(<Component {...pageProps} />)}
           </Hydrate>
         </QueryClientProvider>
