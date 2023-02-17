@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';
-import BGSVG from 'public/assets/svg/main-bg.svg';
 import React, { useEffect, useState } from 'react';
+import BgMotion from 'src/components/BgMotion';
 import { useWeb3 } from 'src/hook/web3';
 
 const contents = ['Find your wallet', 'Connecting', 'Connect your wallet !!'];
@@ -18,7 +18,7 @@ export const ConnectPage = () => {
         setCurrentIdx(2);
         setTimeout(() => {
           push('/dashboard');
-        }, 10000);
+        }, 6000);
       });
     }, 3000);
     return () => clearTimeout(timeout);
@@ -26,7 +26,7 @@ export const ConnectPage = () => {
 
   return (
     <>
-      <BGSVG className="fixed inset-x-0 top-1/2 -z-10 mx-auto -translate-y-1/2 opacity-25 md:w-full xl:w-2/3" />
+      <BgMotion />
       <div className="relative grid h-full flex-1 place-content-center">
         <div className="flex flex-col">
           <motion.h1

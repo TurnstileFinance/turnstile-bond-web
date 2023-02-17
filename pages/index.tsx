@@ -13,14 +13,14 @@ export default function HomePage() {
   const { account } = useWeb3React();
   return (
     <>
-      <GNB hasCard={false} />
+      <GNB />
 
       <motion.div layout className="flex h-full flex-1 flex-col px-4 py-10">
         <BgMotion />
         <MainTabs />
 
         {account ? (
-          <div className="mx-auto mt-10 grid w-full max-w-screen-lg grid-cols-2 gap-5 sm:grid-cols-3 md:grid-cols-4">
+          <div className="mx-auto mt-20 grid w-full max-w-screen-lg grid-cols-2 gap-5 sm:grid-cols-3 md:grid-cols-4">
             {NFT_DUMMY.map((nft) => (
               <NFTCard items={nft} key={nft.id} />
             ))}

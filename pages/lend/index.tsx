@@ -32,7 +32,7 @@ export const LendPage = () => {
         <MainTabs />
         <BgMotion />
 
-        <div>
+        <div className="pt-10">
           <div className="mb-5 flex items-end justify-between">
             <h3>Current Bonds</h3>
             <div>
