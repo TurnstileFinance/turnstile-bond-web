@@ -16,8 +16,8 @@ export const BorrowFundModal: FC<BorrowFundModalProps> = ({
   isOpen,
   onClose,
 }) => {
-  if (!isOpen) return <></>;
   const { push } = useRouter();
+  if (!isOpen) return <></>;
   return (
     <AnimationLayout open={isOpen} onClose={onClose}>
       <div className="my-8 w-full max-w-md transform space-y-16 overflow-hidden rounded-lg bg-brand-black p-6 text-left shadow-xl transition-all">
