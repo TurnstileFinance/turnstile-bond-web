@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion';
-import { useRouter } from 'next/router';
 import BGSVG from 'public/assets/svg/main-bg.svg';
 import TelegramSVG from 'public/assets/svg/telegram.svg';
 import TwitterSVG from 'public/assets/svg/twitter.svg';
@@ -9,12 +8,11 @@ import { GNB } from 'src/components/nav/GNB';
 import MainTabs from 'src/components/nav/MainTabs';
 
 export default function AboutPage() {
-  const { push } = useRouter();
   const [open, setOpen] = useState<boolean>(false);
   return (
     <>
       <BorrowFundModal isOpen={open} onClose={() => setOpen(false)} />
-      <GNB hasCard={false} />
+      <GNB />
       <motion.div
         layout
         className="mx-auto flex h-full w-full max-w-screen-lg flex-1 flex-col px-4 py-10"
