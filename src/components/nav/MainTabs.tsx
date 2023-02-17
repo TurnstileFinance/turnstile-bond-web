@@ -16,7 +16,7 @@ export const MainTabs = () => {
   const { push, pathname } = useRouter();
   const { account } = useWeb3React();
   return (
-    <div className="mx-auto flex space-x-8">
+    <div className="z-10 mx-auto flex space-x-8">
       {TAB_DATA.map((tab) => (
         <Tab
           disabled={!account}

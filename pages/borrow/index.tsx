@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
-import BGSVG from 'public/assets/svg/main-bg.svg';
 import { useState } from 'react';
+import BgMotion from 'src/components/BgMotion';
 import { NFTCard } from 'src/components/card/NFTCard';
 import { BorrowFundModal } from 'src/components/modal/BorrowFundModal';
 import { GNB } from 'src/components/nav/GNB';
@@ -18,7 +18,7 @@ export default function BorrowPage() {
         layout
         className="mx-auto flex h-full w-full max-w-screen-lg flex-1 flex-col px-4 py-10"
       >
-        <BGSVG className="fixed inset-x-0 top-1/2 -z-10 mx-auto -translate-y-1/2 opacity-25 md:w-full xl:w-2/3" />
+        <BgMotion />
         <MainTabs />
 
         {isConnectCard ? (

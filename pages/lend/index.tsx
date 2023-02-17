@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
-import BGSVG from 'public/assets/svg/main-bg.svg';
 import React, { useState } from 'react';
+import BgMotion from 'src/components/BgMotion';
 import Button, { ButtonVariant } from 'src/components/Button';
 import { RowTextContents } from 'src/components/card/RowTextContents';
 import { RowTextHead } from 'src/components/card/RowTextHead';
@@ -30,10 +30,9 @@ export const LendPage = () => {
         className="mx-auto flex h-full w-full max-w-screen-lg flex-1 flex-col space-y-10 px-4 py-10"
       >
         <MainTabs />
+        <BgMotion />
 
         <div>
-          {/* 뒷배경 모양 - space-y에 걸리는 이슈때문에 여기에 둠. */}
-          <BGSVG className="fixed inset-x-0 top-1/2 -z-10 mx-auto -translate-y-1/2 opacity-25 md:w-full xl:w-2/3" />
           <div className="mb-5 flex items-end justify-between">
             <h3>Current Bonds</h3>
             <div>

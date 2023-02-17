@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion';
-import BGSVG from 'public/assets/svg/main-bg.svg';
 import TelegramSVG from 'public/assets/svg/telegram.svg';
 import TwitterSVG from 'public/assets/svg/twitter.svg';
 import { useState } from 'react';
+import BgMotion from 'src/components/BgMotion';
 import { BorrowFundModal } from 'src/components/modal/BorrowFundModal';
 import { GNB } from 'src/components/nav/GNB';
 import MainTabs from 'src/components/nav/MainTabs';
@@ -17,7 +17,7 @@ export default function AboutPage() {
         layout
         className="mx-auto flex h-full w-full max-w-screen-lg flex-1 flex-col px-4 py-10"
       >
-        <BGSVG className="fixed inset-x-0 top-1/2 -z-10 mx-auto -translate-y-1/2 opacity-25 md:w-full xl:w-2/3" />
+        <BgMotion />
         <MainTabs />
 
         <div className="my-36 space-y-16">
