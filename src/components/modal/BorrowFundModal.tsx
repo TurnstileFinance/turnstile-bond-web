@@ -1,8 +1,10 @@
+import { useRouter } from 'next/router';
 import { FC } from 'react';
 
 import Button, { ButtonVariant } from '../Button';
 import CountingUnitTextField from '../CountingUnitTextField';
 import { Icon } from '../Icon';
+import { toastSuccess } from '../Toast';
 import { AnimationLayout } from './AnimationLayout';
 
 interface BorrowFundModalProps {
@@ -15,6 +17,7 @@ export const BorrowFundModal: FC<BorrowFundModalProps> = ({
   onClose,
 }) => {
   if (!isOpen) return <></>;
+  const { push } = useRouter();
   return (
     <AnimationLayout open={isOpen} onClose={onClose}>
       <div className="my-8 w-full max-w-md transform space-y-16 overflow-hidden rounded-lg bg-brand-black p-6 text-left shadow-xl transition-all">
@@ -48,6 +51,11 @@ export const BorrowFundModal: FC<BorrowFundModalProps> = ({
           text="Fund"
           variant={ButtonVariant.SOLID}
           className="w-full disabled:border-none disabled:bg-[#27272A] disabled:text-zinc-400"
+          onClick={() => {
+            push('/lend');
+            toastSuccess('Funding has been successful.');
+          }}
+
           // CountingUnitTextField에 숫자가 없을 경우 disabled처리.
           // disabled
         />

@@ -6,6 +6,8 @@ import Bell from 'public/assets/icons/icon-bell.svg';
 import BellOff from 'public/assets/icons/icon-bell-off.svg';
 import Bookmark from 'public/assets/icons/icon-bookmark.svg';
 import Calendar from 'public/assets/icons/icon-calendar.svg';
+import XCircle from 'public/assets/icons/icon-check-circle.svg';
+import CheckCircle from 'public/assets/icons/icon-check-circle.svg';
 import ChevronDown from 'public/assets/icons/icon-chevron-down.svg';
 import ChevronLeft from 'public/assets/icons/icon-chevron-left.svg';
 import ChevronRight from 'public/assets/icons/icon-chevron-right.svg';
@@ -66,6 +68,8 @@ function withFill<T extends SVGProps<SVGSVGElement>>(
 }
 
 export const Icon = {
+  XCircle: XCircle,
+  CheckCircle: CheckCircle,
   Logo: Logo,
   FileUpload: withStroke(FileUpload),
   ArrowLeft: withStroke(ArrowLeft),

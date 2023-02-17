@@ -55,7 +55,7 @@ export const LendPage = () => {
 
           <div className="mt-3 divide-y divide-zinc-800 overflow-hidden rounded-md border border-zinc-800">
             {CURRENT_BONDS_CONTAENTS_DUMMY.length === 0 ? (
-              <div className="mt-3 grid w-full place-content-center rounded-md border border-zinc-700 bg-black/60 px-10 py-5 text-zinc-500">
+              <div className="grid w-full place-content-center bg-black/60 px-10 py-5 text-zinc-500">
                 No current
               </div>
             ) : (
@@ -93,37 +93,40 @@ export const LendPage = () => {
               />
             ))}
           </RowTextHead>
-          {CLOSED_BONDS_CONTAENTS_DUMMY.length === 0 ? (
-            <div className="mt-3 grid w-full place-content-center rounded-md border border-zinc-700 bg-black/60 px-10 py-5 text-zinc-500">
-              No current
-            </div>
-          ) : (
-            CLOSED_BONDS_CONTAENTS_DUMMY.map((cr_contents) => {
-              return (
-                <RowTextContents key={cr_contents.id}>
-                  {CLOSED_BONDS_CONTAENT_KEYS.map((key) => (
-                    <RowTextContents.Text
-                      key={cr_contents.id + key}
-                      contents={cr_contents[key]}
-                      className={
-                        key === 'id'
-                          ? 'text-zinc-400'
-                          : key === 'claimableAmount'
-                          ? 'text-brand-1'
-                          : ''
-                      }
+
+          <div className="mt-3 divide-y divide-zinc-800 overflow-hidden rounded-md border border-zinc-800">
+            {CLOSED_BONDS_CONTAENTS_DUMMY.length === 0 ? (
+              <div className="grid w-full place-content-center bg-black/60 px-10 py-5 text-zinc-500">
+                No current
+              </div>
+            ) : (
+              CLOSED_BONDS_CONTAENTS_DUMMY.map((cr_contents) => {
+                return (
+                  <RowTextContents key={cr_contents.id}>
+                    {CLOSED_BONDS_CONTAENT_KEYS.map((key) => (
+                      <RowTextContents.Text
+                        key={cr_contents.id + key}
+                        contents={cr_contents[key]}
+                        className={
+                          key === 'id'
+                            ? 'text-zinc-400'
+                            : key === 'claimableAmount'
+                            ? 'text-brand-1'
+                            : ''
+                        }
+                      />
+                    ))}
+                    <Button
+                      text="Claim"
+                      variant={ButtonVariant.OUTLINE}
+                      className="flex-1 px-0"
+                      onClick={() => setClaimMOpen(true)}
                     />
-                  ))}
-                  <Button
-                    text="Claim"
-                    variant={ButtonVariant.OUTLINE}
-                    className="flex-1 px-0"
-                    onClick={() => setClaimMOpen(true)}
-                  />
-                </RowTextContents>
-              );
-            })
-          )}
+                  </RowTextContents>
+                );
+              })
+            )}
+          </div>
         </div>
       </motion.div>
     </>
