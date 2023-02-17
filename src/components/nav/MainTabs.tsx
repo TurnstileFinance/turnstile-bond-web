@@ -14,7 +14,7 @@ const TAB_DATA = [
 export const MainTabs = () => {
   const { push, pathname } = useRouter();
   return (
-    <div className="mx-auto flex space-x-5">
+    <div className="mx-auto flex space-x-8">
       {TAB_DATA.map((tab) => (
         <Tab
           key={tab.id}

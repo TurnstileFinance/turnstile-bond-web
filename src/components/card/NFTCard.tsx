@@ -16,17 +16,20 @@ interface NFTCardProps {
   buttonText?: string;
   isCancel?: boolean;
   items: Items;
+  onClick?: () => void;
 }
 
 export const NFTCard: FC<NFTCardProps> = ({
   buttonText,
   isCancel = false,
   items,
+  onClick,
 }) => {
   return (
     <motion.div
       layout
       className="relative cursor-pointer overflow-hidden rounded-lg p-[0.08rem]"
+      onClick={onClick}
     >
       <div className="group flex flex-col justify-between space-y-5 rounded-lg bg-black px-4 py-6 text-center text-gray-400 transition-all hover:text-brand-1">
         <div>
@@ -52,7 +55,7 @@ export const NFTCard: FC<NFTCardProps> = ({
               'prh-3',
               isCancel
                 ? 'bg-zinc-800 text-zinc-50'
-                : 'border border-gray-300 text-gray-300 group-hover:border-brand-1 group-hover:bg-brand-1 group-hover:text-brand-black group-hover:shadow-[0_0_50px_rgba(188,255,160,0.5)]'
+                : 'border border-gray-300 text-gray-300 group-hover:border-brand-1 group-hover:bg-brand-1 group-hover:text-brand-black '
             )}
           />
         )}
