@@ -5,6 +5,7 @@ import Button, { ButtonVariant } from 'src/components/Button';
 import { NFTCard } from 'src/components/card/NFTCard';
 import { GNB } from 'src/components/nav/GNB';
 import MainTabs from 'src/components/nav/MainTabs';
+import { NFT_DUMMY } from 'src/dummies';
 
 export default function HomePage() {
   const { push } = useRouter();
@@ -12,6 +13,7 @@ export default function HomePage() {
   return (
     <>
       <GNB hasCard={false} />
+
       <motion.div layout className="flex h-full flex-1 flex-col px-4 py-10">
         <div className="fixed inset-x-0 top-1/2 left-1/2 -z-10 h-full w-full -translate-y-1/2 -translate-x-1/2">
           <motion.img
@@ -32,6 +34,7 @@ export default function HomePage() {
             <NFTCard />
             <NFTCard />
             <NFTCard />
+
           </div>
         ) : (
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2">

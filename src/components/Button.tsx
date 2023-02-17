@@ -8,7 +8,7 @@ export enum ButtonVariant {
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   text: string;
-  variant: ButtonVariant;
+  variant?: ButtonVariant;
   className?: string;
 }
 
@@ -19,10 +19,10 @@ const Button = (props: ButtonProps) => {
       type="button"
       {...rest}
       className={twMerge(
-        'rounded-full py-3 px-6 transition-all disabled:border-none disabled:bg-slate-100 disabled:text-slate-400',
+        'rounded-full py-3 px-6 transition-all disabled:border disabled:border-gray-400 disabled:bg-brand-black disabled:text-slate-400',
         variant === ButtonVariant.SOLID && 'bg-brand-1 text-brand-black',
         variant === ButtonVariant.OUTLINE &&
-          'border border-brand-1 text-brand-1 hover:bg-brand-1 hover:text-brand-black hover:shadow-[0_0_50px_rgba(188,255,160,0.5)] active:bg-brand-1',
+          'border border-brand-1 text-brand-1 hover:bg-brand-1 hover:text-brand-black hover:shadow-[0_0_30px_rgba(188,255,160,0.5)] active:bg-brand-1',
         className
       )}
     >

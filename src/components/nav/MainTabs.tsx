@@ -9,14 +9,14 @@ const TAB_DATA = [
   { id: 2, text: 'Lend', path: '/lend' },
   { id: 3, text: 'Borrow', path: '/borrow' },
   { id: 4, text: 'About', path: '/about' },
-  { id: 5, text: 'Connect', path: '/connect' },
+  // { id: 5, text: 'Connect', path: '/connect' },
 ];
 
 export const MainTabs = () => {
   const { push, pathname } = useRouter();
   const { account } = useWeb3React();
   return (
-    <div className="mx-auto flex space-x-5">
+    <div className="mx-auto flex space-x-8">
       {TAB_DATA.map((tab) => (
         <Tab
           disabled={!account}

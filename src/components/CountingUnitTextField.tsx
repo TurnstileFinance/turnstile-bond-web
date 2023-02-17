@@ -53,7 +53,7 @@ function CountingUnitTextField(
           disabled={disabled}
           ref={ref || inputRef}
           type="number"
-          className={`peer flex-1 
+          className={`peer flex-1 bg-black text-end text-brand-1
           ${disabled && 'placeholder:text-gray-400'}`}
           {...props}
           {...(props?.type === 'number' && {
@@ -68,7 +68,7 @@ function CountingUnitTextField(
         />
         <span className="pr-4 text-15">{countingUnit}</span>
       </div>
-      {helper && <p className="text-sm text-red-400">{helper}</p>}
+      {helper && <p className="text-end text-sm text-red-400">{helper}</p>}
     </div>
   );
 }
