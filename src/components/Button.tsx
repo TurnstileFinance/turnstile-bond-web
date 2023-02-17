@@ -8,7 +8,7 @@ export enum ButtonVariant {
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   text: string;
-  variant: ButtonVariant;
+  variant?: ButtonVariant;
   className?: string;
 }
 

@@ -8,7 +8,7 @@ const TAB_DATA = [
   { id: 2, text: 'Lend', path: '/lend' },
   { id: 3, text: 'Borrow', path: '/borrow' },
   { id: 4, text: 'About', path: '/about' },
-  { id: 5, text: 'Connect', path: '/connect' },
+  // { id: 5, text: 'Connect', path: '/connect' },
 ];
 
 export const MainTabs = () => {
