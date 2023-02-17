@@ -169,12 +169,12 @@
   }
 
   .textfield-counting-unit {
-    @apply flex items-center space-x-2 focus-within:border-brand-1;
+    @apply flex items-center space-x-2 focus-within:border-zinc-700;
   }
 
   .textfield {
-    @apply h-12 rounded-md border border-gray-200 px-4 placeholder-gray-400
-           focus:border-brand-1 focus:ring-0 disabled:bg-gray-100 disabled:text-gray-400;
+    @apply h-12 rounded-md border border-black bg-black px-4 placeholder-gray-400
+           focus:border-zinc-700 focus:ring-0 disabled:bg-gray-900 disabled:text-gray-700;
   }
 
   .textfield::-webkit-outer-spin-button {

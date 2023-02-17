@@ -1,9 +1,11 @@
 import { motion } from 'framer-motion';
 import BGSVG from 'public/assets/svg/main-bg.svg';
-import React from 'react';
+import React, { useState } from 'react';
 import Button, { ButtonVariant } from 'src/components/Button';
 import { RowTextContents } from 'src/components/card/RowTextContents';
 import { RowTextHead } from 'src/components/card/RowTextHead';
+import { ClaimModal } from 'src/components/modal/ClaimModal';
+import { FundModal } from 'src/components/modal/FundModal';
 import { GNB } from 'src/components/nav/GNB';
 import MainTabs from 'src/components/nav/MainTabs';
 import {
@@ -15,9 +17,13 @@ import {
   CURRENT_BONDS_DUMMY,
 } from 'src/dummies';
 
-export const index = () => {
+export const LendPage = () => {
+  const [fundOpen, setFundOpen] = useState<boolean>(false);
+  const [claimMOpen, setClaimMOpen] = useState<boolean>(false);
   return (
     <>
+      <FundModal isOpen={fundOpen} onClose={() => setFundOpen(false)} />
+      <ClaimModal isOpen={claimMOpen} onClose={() => setClaimMOpen(false)} />
       <GNB />
       <motion.div
         layout
@@ -67,7 +73,8 @@ export const index = () => {
                     <Button
                       text="Fund"
                       variant={ButtonVariant.OUTLINE}
-                      className="px-10"
+                      className="flex-1 px-0"
+                      onClick={() => setFundOpen(true)}
                     />
                   </RowTextContents>
                 );
@@ -111,7 +118,8 @@ export const index = () => {
                   <Button
                     text="Claim"
                     variant={ButtonVariant.OUTLINE}
-                    className="px-10"
+                    className="flex-1 px-0"
+                    onClick={() => setClaimMOpen(true)}
                   />
                 </RowTextContents>
               );
@@ -123,4 +131,4 @@ export const index = () => {
   );
 };
 
-export default index;
+export default LendPage;
