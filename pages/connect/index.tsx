@@ -2,22 +2,27 @@ import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import BGSVG from 'public/assets/svg/main-bg.svg';
 import React, { useEffect, useState } from 'react';
+import { useWeb3 } from 'src/hook/web3';
 
 const contents = ['Find your wallet', 'Connecting', 'Connect your wallet !!'];
 
 export const ConnectPage = () => {
   const [currentIdx, setCurrentIdx] = useState(0);
   const { push } = useRouter();
+  const { connect } = useWeb3();
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      if (currentIdx === 2) {
-        push('/dashboard');
-      }
-      setCurrentIdx(currentIdx + 1);
+    const timeout = setTimeout(() => {
+      setCurrentIdx(1);
+      connect().then(() => {
+        setCurrentIdx(2);
+        setTimeout(() => {
+          push('/dashboard');
+        }, 10000);
+      });
     }, 3000);
-    return () => clearInterval(interval);
-  });
+    return () => clearTimeout(timeout);
+  }, []);
 
   return (
     <>
