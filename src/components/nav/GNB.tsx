@@ -12,7 +12,7 @@ export const GNB = () => {
     <div className=" sticky top-0 z-20 h-20 bg-black">
       <div className="relative mx-auto flex h-full w-full max-w-screen-2xl items-center justify-end px-4">
         <Icon.Logo
-          className=" absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+          className=" absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 cursor-pointer"
           onClick={() => push('/dashboard')}
         />
         {account && (
