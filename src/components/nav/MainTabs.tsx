@@ -1,3 +1,4 @@
+import { useWeb3React } from '@web3-react/core';
 import { useRouter } from 'next/router';
 import React from 'react';
 
@@ -13,10 +14,12 @@ const TAB_DATA = [
 
 export const MainTabs = () => {
   const { push, pathname } = useRouter();
+  const { account } = useWeb3React();
   return (
     <div className="mx-auto flex space-x-5">
       {TAB_DATA.map((tab) => (
         <Tab
+          disabled={!account}
           key={tab.id}
           text={tab.text}
           onClick={() => push(tab.path)}
