@@ -12,7 +12,6 @@ import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import React, { ReactElement, ReactNode } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
-import { GNB } from 'src/components/nav/GNB';
 
 type Page<P = Record<string, never>> = NextPage<P> & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -28,7 +27,7 @@ function MyApp({ Component, pageProps }: Props) {
 
   return (
     <>
-      <div className="min-h-screen-25 flex flex-1 flex-col">
+      <div className="flex min-h-screen flex-1 flex-col">
         <Head>
           <meta charSet="utf-8" />
           <link rel="icon" href="/favicon.ico" />
@@ -42,7 +41,6 @@ function MyApp({ Component, pageProps }: Props) {
 
         <QueryClientProvider client={queryClient}>
           <Hydrate state={pageProps.dehydratedState}>
-            <GNB />
             {getLayout(<Component {...pageProps} />)}
           </Hydrate>
         </QueryClientProvider>

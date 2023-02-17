@@ -9,10 +9,10 @@ export const Tab: FC<TabProps> = ({ selected, text, ...props }) => {
   return (
     <button
       {...props}
-      className={`px-3 py-1 ${
+      className={`h5 rounded-full px-10 py-1 shadow-md transition-all hover:bg-brand-1 hover:text-brand-black ${
         selected
-          ? 'border-b-2 border-brand-1 font-semibold text-brand-1'
-          : 'text-gray-400'
+          ? ' tab_shadow bg-brand-1 text-brand-black shadow-brand-1'
+          : 'bg-brand-black text-brand-1 shadow-brand-1'
       } `}
     >
       {text}
