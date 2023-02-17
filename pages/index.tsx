@@ -22,7 +22,7 @@ export default function HomePage() {
               transition: { duration: 20, repeat: Infinity },
             }}
             className="mx-auto md:w-full xl:w-2/3"
-          ></motion.img>
+          />
         </div>
         <MainTabs />
 
