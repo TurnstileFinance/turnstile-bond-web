@@ -18,7 +18,8 @@ module.exports = {
     },
     extend: {
       colors: {
-        'brand-1': '#7950F2',
+        'brand-1': '#BCFFA0',
+        'brand-black': '#0F0F0F',
         // error: defaultTheme.colors.red[400],
         littleblack: 'rgba(0, 0, 0, 0.5)',
         gray: {
@@ -35,7 +36,7 @@ module.exports = {
         },
       },
       fontFamily: {
-        sans: ['Pretendard', ...defaultTheme.fontFamily.sans],
+        sans: ['manrope', ...defaultTheme.fontFamily.sans],
       },
       fontSize: {
         10: ['0.625rem', { lineHeight: '1rem' }],

@@ -27,7 +27,7 @@ function MyApp({ Component, pageProps }: Props) {
 
   return (
     <>
-      <div className="min-h-screen-25 flex flex-1 flex-col">
+      <div className="flex min-h-screen flex-1 flex-col">
         <Head>
           <meta charSet="utf-8" />
           <link rel="icon" href="/favicon.ico" />

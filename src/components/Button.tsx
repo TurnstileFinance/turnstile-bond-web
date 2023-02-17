@@ -1,33 +1,34 @@
-import { useRouter } from 'next/router';
-import { ButtonHTMLAttributes, FC, ReactElement } from 'react';
+import { ButtonHTMLAttributes } from 'react';
+import { twMerge } from 'tailwind-merge';
 
-export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  text?: string;
-  to?: string;
-  icon?: ReactElement;
+export enum ButtonVariant {
+  SOLID = 'solid',
+  OUTLINE = 'outline',
 }
 
-export const Button: FC<ButtonProps> = ({
-  children,
-  className = '',
-  text,
-  to,
-  icon,
-  onClick,
-  ...props
-}) => {
-  const router = useRouter();
+export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  text: string;
+  variant: ButtonVariant;
+  className?: string;
+}
 
+const Button = (props: ButtonProps) => {
+  const { text, className, variant, ...rest } = props;
   return (
     <button
-      className={`button ${className} ${
-        icon && 'flex items-center justify-between'
-      } gap-x-2 `}
-      onClick={to ? () => router.push(to) : onClick}
-      {...props}
+      type="button"
+      {...rest}
+      className={twMerge(
+        'rounded-full py-3 px-6 transition-all disabled:border-none disabled:bg-slate-100 disabled:text-slate-400',
+        variant === ButtonVariant.SOLID && 'bg-brand-1 text-brand-black',
+        variant === ButtonVariant.OUTLINE &&
+          'border border-brand-1 text-brand-1 hover:bg-brand-1 hover:text-brand-black hover:shadow-[0_0_50px_rgba(188,255,160,0.5)] active:bg-brand-1',
+        className
+      )}
     >
-      <div>{text ?? children}</div>
-      {icon}
+      {text}
     </button>
   );
 };
+
+export default Button;

@@ -4,13 +4,50 @@
 
 @layer base {
   body {
-    @apply text-gray-800;
+    @apply bg-black text-white;
   }
   button,
   input,
   textarea,
   select {
     @apply focus:outline-none;
+  }
+}
+
+@layer utilities {
+  h1 {
+    @apply text-[32px] font-extrabold leading-[140%];
+  }
+  .h1 {
+    @apply text-[32px] font-extrabold leading-[140%];
+  }
+  h2 {
+    @apply text-[28px] font-bold leading-[140%];
+  }
+  h3 {
+    @apply text-[24px] font-extrabold leading-[140%];
+  }
+  h4 {
+    @apply text-[20px] font-extrabold leading-[140%];
+  }
+  h5 {
+    @apply text-[17px] font-extrabold leading-[140%];
+  }
+  .h5 {
+    @apply text-[17px] font-extrabold leading-[140%];
+  }
+
+  .prh-1 {
+    @apply text-[16px] font-normal leading-[140%];
+  }
+  .prh-2 {
+    @apply text-[15px] font-normal leading-[140%];
+  }
+  .prh-3 {
+    @apply text-[14px] font-normal leading-[140%];
+  }
+  .prh-4 {
+    @apply text-[13px] font-normal leading-[140%];
   }
 }
 
@@ -161,4 +198,8 @@
     @apply pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow
            ring-0 transition duration-200 ease-in-out;
   }
+}
+
+.tab_shadow {
+  box-shadow: 0px 0px 22px rgba(188, 255, 160, 0.5);
 }

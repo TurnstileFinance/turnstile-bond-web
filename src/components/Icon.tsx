@@ -46,6 +46,7 @@ import User from 'public/assets/icons/icon-user.svg';
 import Warning from 'public/assets/icons/icon-warning.svg';
 import X from 'public/assets/icons/icon-x.svg';
 import Youtube from 'public/assets/icons/icon-youtube.svg';
+import Logo from 'public/assets/svg/logo.svg';
 import { FC, SVGProps } from 'react';
 
 function withStroke<T extends SVGProps<SVGSVGElement>>(
@@ -65,6 +66,7 @@ function withFill<T extends SVGProps<SVGSVGElement>>(
 }
 
 export const Icon = {
+  Logo: Logo,
   FileUpload: withStroke(FileUpload),
   ArrowLeft: withStroke(ArrowLeft),
   ArrowRight: withStroke(ArrowRight),
