@@ -44,7 +44,7 @@ function MyApp({ Component, pageProps }: Props) {
           <meta name="description" content="turnstile-bond" />
           <link rel="apple-touch-icon" href="/logo192.png" />
           <link rel="manifest" href="/manifest.json" />
-          <title>turnstile-bond</title>
+          <title>Turnstile-Finance</title>
         </Head>
 
         <QueryClientProvider client={queryClient}>
