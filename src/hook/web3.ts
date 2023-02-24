@@ -11,7 +11,7 @@ import {
 import { toHex } from '../utils';
 
 const injected = new InjectedConnector({
-  supportedChainIds: [7700, 740],
+  supportedChainIds: [7700, 740, 31337],
 });
 
 export const useWeb3 = () => {
@@ -45,7 +45,7 @@ export const useWeb3 = () => {
   const connect = () => {
     setItemInLocalStorage(LOCAL_STORAGE_KEY.PROVIDER, 'metamask');
     return activate(injected).then(() => {
-      switchMetaMaskNetwork('7700');
+      switchMetaMaskNetwork('31337');
     });
   };
 
