@@ -1,3 +1,5 @@
+import { ethers } from 'ethers';
+
 export enum NFTCARD_STATUS {
   NotStarted,
   Active,
@@ -17,5 +19,15 @@ export interface NftCard {
     raised: string;
     received: string;
     accrued: string;
+  };
+}
+
+export interface BondStartDto {
+  library: ethers.providers.Web3Provider;
+  data: {
+    nftId: string;
+    minGoal: string;
+    maxGoal: string;
+    premium: string;
   };
 }
