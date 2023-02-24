@@ -1,17 +1,13 @@
 import { motion } from 'framer-motion';
 import TelegramSVG from 'public/assets/svg/telegram.svg';
 import TwitterSVG from 'public/assets/svg/twitter.svg';
-import { useState } from 'react';
 import BgMotion from 'src/components/BgMotion';
-import { BorrowFundModal } from 'src/components/modal/BorrowFundModal';
 import { GNB } from 'src/components/nav/GNB';
 import MainTabs from 'src/components/nav/MainTabs';
 
 export default function AboutPage() {
-  const [open, setOpen] = useState<boolean>(false);
   return (
     <>
-      <BorrowFundModal isOpen={open} onClose={() => setOpen(false)} />
       <GNB />
       <motion.div
         layout
