@@ -1,10 +1,13 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useWeb3React } from '@web3-react/core';
 import { BigNumber } from 'ethers';
+import { toast } from 'react-toastify';
 import { TURNSTILE_BOND_ABI } from 'src/abi/turnstileBond';
 import { fetcher } from 'src/api';
+import { startBond } from 'src/api/bond';
+import { toastError, toastSuccess } from 'src/components/Toast';
 import { TURNSTILE_BOND } from 'src/constants/address';
-import { NftCard } from 'src/type';
+import { BondStartDto, NftCard } from 'src/type';
 
 export const useSellerBondStatus = () => {
   const { account, active, library } = useWeb3React();
@@ -48,4 +51,32 @@ export const useCantoBalance = () => {
       enabled: active && !!account,
     }
   );
+};
+
+export const useBondStart = (onSuccess: () => void) => {
+  const { account } = useWeb3React();
+  const queryClient = useQueryClient();
+  return useMutation((bondStartDto: BondStartDto) => startBond(bondStartDto), {
+    onSuccess: (res: any) => {
+      toast
+        .promise(res.wait, {
+          pending: 'transaction in progress',
+          success: `Start Bond was successful.`,
+          error: 'transaction is failed 🤯',
+        })
+        .then(() => {
+          onSuccess();
+          toastSuccess('Funding has been successful.');
+          queryClient.invalidateQueries([
+            TURNSTILE_BOND,
+            'sellerBondStatus',
+            account,
+          ]);
+          queryClient.invalidateQueries([TURNSTILE_BOND, 'currentBondStatus']);
+        });
+    },
+    onError: (e: any) => {
+      toastError(e);
+    },
+  });
 };
