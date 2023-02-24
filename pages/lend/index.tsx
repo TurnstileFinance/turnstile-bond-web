@@ -127,7 +127,7 @@ export const LendPage = () => {
                   const tokenId = BigNumber.from(nft.tokenId).toString();
                   const softCap = BigNumber.from(info.softCap);
                   const hardCap = BigNumber.from(info.hardCap);
-                  const premium = BigNumber.from(info.premium).toString();
+                  const premium = BigNumber.from(info.premium).mul(100);
                   return (
                     <RowTextContents key={tokenId}>
                       {[
@@ -135,7 +135,7 @@ export const LendPage = () => {
                         ethers.utils.formatEther(softCap.toString()),
                         ethers.utils.formatEther(hardCap.toString()),
                         `${softCap.mul(100).div(hardCap).toString()}%`,
-                        `${premium}%`,
+                        `${ethers.utils.formatEther(premium.toString())}%`,
                       ].map((value, index) => {
                         const col = index;
                         return (
