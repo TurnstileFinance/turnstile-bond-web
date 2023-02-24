@@ -1,6 +1,6 @@
 import { useWeb3React } from '@web3-react/core';
 import { motion } from 'framer-motion';
-import { map } from 'lodash';
+import { filter, map } from 'lodash';
 import { useRouter } from 'next/router';
 import BgMotion from 'src/components/BgMotion';
 import Button, { ButtonVariant } from 'src/components/Button';
@@ -8,11 +8,20 @@ import { NFTCard } from 'src/components/card/NFTCard';
 import { GNB } from 'src/components/nav/GNB';
 import MainTabs from 'src/components/nav/MainTabs';
 import { useSellerBondStatus } from 'src/hooks/bondHooks';
+import { NFTCARD_STATUS } from 'src/type';
 
 export default function HomePage() {
   const { push } = useRouter();
   const { account } = useWeb3React();
   const { data: nfts } = useSellerBondStatus();
+  const bodingNfts = filter(
+    nfts,
+    (nft) => nft.info.status !== NFTCARD_STATUS.NotStarted
+  );
+  const bondableNfts = filter(
+    nfts,
+    (nft) => nft.info.status === NFTCARD_STATUS.NotStarted
+  );
   return (
     <>
       <GNB />
@@ -22,11 +31,43 @@ export default function HomePage() {
         <MainTabs />
 
         {account ? (
-          <div className="mx-auto mt-20 grid w-full max-w-screen-lg grid-cols-2 gap-5 sm:grid-cols-3 md:grid-cols-4">
-            {map(nfts, (nft) => (
-              <NFTCard nft={nft} key={nft.tokenId} />
-            ))}
-          </div>
+          <>
+            <div className="mt-20 flex w-full flex-col items-center justify-center space-y-10 pl-40">
+              <div className="flex w-full flex-col justify-center space-y-6">
+                <span className="text-24 font-bold text-white">
+                  Bonding NFTs ({bodingNfts.length})
+                </span>
+                {bodingNfts.length === 0 ? (
+                  <h1 className="text-brand-1 shadow-brand-1 drop-shadow-lg">
+                    You do not have any Bonding CSR NFT...
+                  </h1>
+                ) : (
+                  <div className="grid w-full max-w-screen-lg grid-cols-2 gap-5 sm:grid-cols-3 md:grid-cols-4">
+                    {map(bodingNfts, (nft) => (
+                      <NFTCard nft={nft} key={nft.tokenId} />
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              <div className="flex w-full flex-col justify-center space-y-6">
+                <span className="text-24 font-bold text-white">
+                  Bondable NFTs ({bondableNfts.length})
+                </span>
+                {bondableNfts.length === 0 ? (
+                  <h1 className="text-brand-1 shadow-brand-1 drop-shadow-lg">
+                    You do not have any Bondable CSR NFT...
+                  </h1>
+                ) : (
+                  <div className="grid w-full max-w-screen-lg grid-cols-2 gap-5 sm:grid-cols-3 md:grid-cols-4">
+                    {map(bondableNfts, (nft) => (
+                      <NFTCard nft={nft} key={nft.tokenId} />
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          </>
         ) : (
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2">
             <Button
