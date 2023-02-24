@@ -23,6 +23,9 @@ export const useSetApprovalForAll = () => {
   const queryClient = useQueryClient();
   return useMutation(() => setApprovalForAll(library), {
     onSuccess: (res: any) => {
+      if (!res?.wait) {
+        return;
+      }
       toast
         .promise(res.wait, {
           pending: 'transaction in progress',

@@ -58,6 +58,9 @@ export const useBondStart = (onSuccess: () => void) => {
   const queryClient = useQueryClient();
   return useMutation((bondStartDto: BondStartDto) => startBond(bondStartDto), {
     onSuccess: (res: any) => {
+      if (!res?.wait) {
+        return;
+      }
       toast
         .promise(res.wait, {
           pending: 'transaction in progress',
@@ -87,6 +90,9 @@ export const useCancelBond = (onSuccess: () => void) => {
     (bondCancelDto: BondCancelDto) => cancelBond(bondCancelDto),
     {
       onSuccess: (res: any) => {
+        if (!res?.wait) {
+          return;
+        }
         toast
           .promise(res.wait, {
             pending: 'transaction in progress',
