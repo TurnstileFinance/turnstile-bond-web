@@ -43,6 +43,7 @@
     "react-hook-form": "^7.9.0",
     "react-i18next": "^11.18.4",
     "react-id-generator": "^3.0.1",
+    "react-number-format": "^5.1.3",
     "react-ridge-state": "4.2.1",
     "react-toastify": "^9.0.8",
     "sharp": "^0.31.0",
