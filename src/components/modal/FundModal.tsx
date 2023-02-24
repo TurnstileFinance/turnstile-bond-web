@@ -1,4 +1,6 @@
-import { FC } from 'react';
+import { ethers } from 'ethers';
+import { FC, useState } from 'react';
+import { useCantoBalance } from 'src/hooks/bondHooks';
 
 import Button, { ButtonVariant } from '../Button';
 import CountingUnitTextField from '../CountingUnitTextField';
@@ -11,6 +13,11 @@ interface FundModalProps {
 }
 
 export const FundModal: FC<FundModalProps> = ({ isOpen, onClose }) => {
+  const [fundAmount, setFundAmount] = useState<string>('');
+  const fundAmountInWei = ethers.utils.parseEther(
+    !!fundAmount ? fundAmount : '0'
+  );
+  const { data: balance } = useCantoBalance();
   if (!isOpen) return <></>;
   return (
     <AnimationLayout open={isOpen} onClose={onClose}>
@@ -24,13 +31,19 @@ export const FundModal: FC<FundModalProps> = ({ isOpen, onClose }) => {
         <div className="space-y-5">
           <div className="ml-auto flex w-fit items-center space-x-2 rounded-full bg-white/10 px-5 py-1">
             <p className="prh-1 text-gray-500">Your Balance</p>
-            <p className="prh-3">12,000 CANTO</p>
+            <p className="prh-3">
+              {balance &&
+                parseFloat(ethers.utils.formatEther(balance)).toFixed(6)}
+            </p>
           </div>
           <div className="flex justify-between space-x-5">
             <p className="prh-1 pt-2.5">Fund Qty</p>
             <div className="flex-1">
               <CountingUnitTextField
                 countingUnit="CANTO"
+                value={fundAmount}
+                onChange={(e) => setFundAmount(e.target.value)}
+
                 // 내 가진 돈보다 더 입력하면 아래 메시지와 함께 disabled처리
                 // helper="*Your Balance quantity is not enough"
               />
@@ -41,6 +54,7 @@ export const FundModal: FC<FundModalProps> = ({ isOpen, onClose }) => {
           text="Fund"
           variant={ButtonVariant.SOLID}
           className="w-full disabled:border-none disabled:bg-[#27272A] disabled:text-zinc-400"
+          disabled={balance && fundAmountInWei.gt(balance)}
           // CountingUnitTextField에 숫자가 없을 경우 disabled처리.
           // disabled
         />
