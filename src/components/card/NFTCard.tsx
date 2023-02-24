@@ -1,30 +1,26 @@
+import { BigNumber, ethers } from 'ethers';
 import { motion } from 'framer-motion';
 import Black_CircleSVG from 'public/assets/svg/half-circle-black.svg';
 import React, { FC } from 'react';
+import { NftCard } from 'src/type';
 import { twMerge } from 'tailwind-merge';
 
 import Button from '../Button';
 
-interface Items {
-  id: number;
-  title: string;
-  contents: string;
-  price: number;
-}
-
 interface NFTCardProps {
   buttonText?: string;
   isCancel?: boolean;
-  items: Items;
   onClick?: () => void;
+  nft: NftCard;
 }
 
 export const NFTCard: FC<NFTCardProps> = ({
   buttonText,
   isCancel = false,
-  items,
+  nft,
   onClick,
 }) => {
+  const { tokenId, accrued } = nft;
   return (
     <motion.div
       layout
@@ -33,7 +29,7 @@ export const NFTCard: FC<NFTCardProps> = ({
     >
       <div className="group flex flex-col justify-between space-y-5 rounded-lg bg-black px-4 py-6 text-center text-gray-400 transition-all hover:text-brand-1">
         <div>
-          <h3>{items.title}</h3>
+          <h3>CSR NFT {BigNumber.from(tokenId).toString()}</h3>
 
           {/* border 역할하는 곳. */}
           <div className="absolute  top-1/2 left-1/2 -z-10 h-[180%] w-[180%] -translate-x-1/2 -translate-y-1/2 rotate-45 bg-gradient-to-r from-[#E5E5E5]/70 via-[#181818] to-[#E5E5E5]/70 transition-all group-hover:from-brand-1 group-hover:via-brand-1/5 group-hover:to-brand-1" />
@@ -44,8 +40,8 @@ export const NFTCard: FC<NFTCardProps> = ({
             <Black_CircleSVG className="bl tran z-1 0 rounded-t-full shadow-[0_0_40px_13px_rgba(82,82,82,0.74)] transition-all group-hover:shadow-[0_0_40px_13px_rgba(191,255,165,0.74)]" />
           </div>
           <div className="space-y-0.5">
-            <p className="prh-4 line-clamp-2">{items.contents}</p>
-            <h3>{items.price.toLocaleString()}</h3>
+            <p className="prh-4 line-clamp-2">{'accrued Canto balance'}</p>
+            <h3>{ethers.utils.formatEther(accrued)}</h3>
           </div>
         </div>
         {buttonText && (
