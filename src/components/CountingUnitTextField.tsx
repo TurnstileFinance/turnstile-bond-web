@@ -1,9 +1,6 @@
-import React, {
-  ForwardedRef,
-  forwardRef,
-  InputHTMLAttributes,
-  useRef,
-} from 'react';
+import { isArray } from 'lodash';
+import React, { ForwardedRef, forwardRef, InputHTMLAttributes } from 'react';
+import { NumericFormat } from 'react-number-format';
 import { twMerge } from 'tailwind-merge';
 
 import { Label } from './Label';
@@ -31,7 +28,6 @@ function CountingUnitTextField(
   }: CountingUnitTextFieldProps,
   ref?: ForwardedRef<HTMLInputElement>
 ): JSX.Element {
-  const inputRef = useRef<HTMLInputElement>(null);
   return (
     <div className="label-col">
       {label && (
@@ -49,23 +45,23 @@ function CountingUnitTextField(
           `${helper && 'border-red-400'}`
         )}
       >
-        <input
+        <NumericFormat
+          className={`peer flex-1 border-0 bg-black text-end text-brand-1 ring-0
+         ${disabled && 'placeholder:text-gray-400'}`}
+          value={
+            isArray(props.value)
+              ? undefined
+              : (props.value as string | number | null | undefined)
+          }
+          onChange={props.onChange}
+          allowLeadingZeros
+          thousandSeparator=","
           disabled={disabled}
-          ref={ref || inputRef}
-          type="number"
-          className={`peer flex-1 bg-black text-end text-brand-1
-          ${disabled && 'placeholder:text-gray-400'}`}
-          {...props}
-          {...(props?.type === 'number' && {
-            onWheel: (e: React.WheelEvent<HTMLInputElement>) =>
-              e.currentTarget.blur(),
-            onKeyPress: (e) => {
-              if (isNaN(Number(e.currentTarget.value + e.key))) {
-                e.preventDefault();
-              }
-            },
-          })}
+          onWheel={(e: React.WheelEvent<HTMLInputElement>) =>
+            e.currentTarget.blur()
+          }
         />
+
         <span className="pr-4 text-15">{countingUnit}</span>
       </div>
       {helper && <p className="text-end text-sm text-red-400">{helper}</p>}
