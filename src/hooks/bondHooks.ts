@@ -4,10 +4,10 @@ import { BigNumber } from 'ethers';
 import { toast } from 'react-toastify';
 import { TURNSTILE_BOND_ABI } from 'src/abi/turnstileBond';
 import { fetcher } from 'src/api';
-import { startBond } from 'src/api/bond';
-import { toastError, toastSuccess } from 'src/components/Toast';
+import { cancelBond, startBond } from 'src/api/bond';
+import { toastError } from 'src/components/Toast';
 import { TURNSTILE_BOND } from 'src/constants/address';
-import { BondStartDto, NftCard } from 'src/type';
+import { BondCancelDto, BondStartDto, NftCard } from 'src/type';
 
 export const useSellerBondStatus = () => {
   const { account, active, library } = useWeb3React();
@@ -66,7 +66,6 @@ export const useBondStart = (onSuccess: () => void) => {
         })
         .then(() => {
           onSuccess();
-          toastSuccess('Funding has been successful.');
           queryClient.invalidateQueries([
             TURNSTILE_BOND,
             'sellerBondStatus',
@@ -79,4 +78,37 @@ export const useBondStart = (onSuccess: () => void) => {
       toastError(e);
     },
   });
+};
+
+export const useCancelBond = (onSuccess: () => void) => {
+  const { account } = useWeb3React();
+  const queryClient = useQueryClient();
+  return useMutation(
+    (bondCancelDto: BondCancelDto) => cancelBond(bondCancelDto),
+    {
+      onSuccess: (res: any) => {
+        toast
+          .promise(res.wait, {
+            pending: 'transaction in progress',
+            success: `Cancel Bond was successful.`,
+            error: 'transaction is failed 🤯',
+          })
+          .then(() => {
+            onSuccess();
+            queryClient.invalidateQueries([
+              TURNSTILE_BOND,
+              'sellerBondStatus',
+              account,
+            ]);
+            queryClient.invalidateQueries([
+              TURNSTILE_BOND,
+              'currentBondStatus',
+            ]);
+          });
+      },
+      onError: (e: any) => {
+        toastError(e);
+      },
+    }
+  );
 };
