@@ -24,7 +24,9 @@ export default function BorrowPage() {
   const { data: approveForAll } = useIsApproveForAll();
   const bodingNfts = filter(
     nfts,
-    (nft) => nft.info.status !== NFTCARD_STATUS.NotStarted
+    (nft) =>
+      nft.info.status !== NFTCARD_STATUS.NotStarted &&
+      nft.info.status !== NFTCARD_STATUS.Canceled
   );
   const bondableNfts = filter(
     nfts,
