@@ -31,3 +31,10 @@ export interface BondStartDto {
     premium: string;
   };
 }
+
+export interface BondCancelDto {
+  library: ethers.providers.Web3Provider;
+  data: {
+    nftId: string;
+  };
+}
