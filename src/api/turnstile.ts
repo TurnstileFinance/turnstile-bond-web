@@ -17,7 +17,7 @@ export const setApprovalForAll = async (
     toastError('error estimateGas');
     return;
   }
-  return contract.setApprovalForAll(TURNSTILE, true, {
+  return contract.setApprovalForAll(TURNSTILE_BOND, true, {
     gasLimit: BigNumber.from(gasUnits._hex).toNumber(),
   });
 };
