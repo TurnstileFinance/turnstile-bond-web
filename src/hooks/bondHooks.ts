@@ -4,10 +4,16 @@ import { BigNumber } from 'ethers';
 import { toast } from 'react-toastify';
 import { TURNSTILE_BOND_ABI } from 'src/abi/turnstileBond';
 import { fetcher } from 'src/api';
-import { cancelBond, startBond } from 'src/api/bond';
+import { cancelBond, fundBond, startBond } from 'src/api/bond';
 import { toastError } from 'src/components/Toast';
 import { TURNSTILE_BOND } from 'src/constants/address';
-import { BondCancelDto, BondStartDto, NftCard } from 'src/type';
+import {
+  BondCancelDto,
+  BondFundDto,
+  BondStartDto,
+  ClaimableNftCard,
+  NftCard,
+} from 'src/type';
 
 export const useSellerBondStatus = () => {
   const { account, active, library } = useWeb3React();
@@ -33,7 +39,7 @@ export const useCurrentBondStatus = () => {
 
 export const useGetClaimableBond = () => {
   const { account, active, library } = useWeb3React();
-  return useQuery<Array<NftCard>>(
+  return useQuery<Array<ClaimableNftCard>>(
     [TURNSTILE_BOND, 'getClaimableBond', account],
     fetcher(library, TURNSTILE_BOND_ABI),
     {
@@ -117,4 +123,46 @@ export const useCancelBond = (onSuccess: () => void) => {
       },
     }
   );
+};
+
+export const useBalanceOfToken = (tokenId: string) => {
+  const { account, active, library } = useWeb3React();
+  return useQuery<BigNumber>(
+    [TURNSTILE_BOND, 'balanceOf', account, tokenId],
+    fetcher(library, TURNSTILE_BOND_ABI),
+    {
+      enabled: active && !!account,
+    }
+  );
+};
+
+export const useFundBond = (onSuccess: () => void) => {
+  const { account } = useWeb3React();
+  const queryClient = useQueryClient();
+  return useMutation((bondFundDto: BondFundDto) => fundBond(bondFundDto), {
+    onSuccess: (res: any) => {
+      if (!res?.wait) {
+        toastError('transaction is failed 🤯');
+        return;
+      }
+      toast
+        .promise(res.wait, {
+          pending: 'transaction in progress',
+          success: `Fund was successful.`,
+          error: 'transaction is failed 🤯',
+        })
+        .then(() => {
+          onSuccess();
+          queryClient.invalidateQueries([
+            TURNSTILE_BOND,
+            'getClaimableBond',
+            account,
+          ]);
+          queryClient.invalidateQueries([TURNSTILE_BOND, 'currentBondStatus']);
+        });
+    },
+    onError: (e: any) => {
+      toastError(e);
+    },
+  });
 };
