@@ -56,8 +56,8 @@ const ClaimableBondRow = (props: ClaimableBondRowProps) => {
               value === tokenId
                 ? 'text-zinc-400'
                 : value === amount
-                ? 'text-brand-1'
-                : ''
+                ? 'truncate text-brand-1'
+                : 'truncate'
             }
           />
         ))}

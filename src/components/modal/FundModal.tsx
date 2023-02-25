@@ -2,6 +2,7 @@ import { useWeb3React } from '@web3-react/core';
 import { BigNumber, ethers } from 'ethers';
 import { FC, useState } from 'react';
 import { useCantoBalance, useFundBond } from 'src/hooks/bondHooks';
+import { NftCard } from 'src/type';
 
 import Button, { ButtonVariant } from '../Button';
 import CountingUnitTextField from '../CountingUnitTextField';
@@ -12,9 +13,15 @@ interface FundModalProps {
   isOpen: boolean;
   onClose: () => void;
   nftId: string;
+  nft?: NftCard;
 }
 
-export const FundModal: FC<FundModalProps> = ({ isOpen, onClose, nftId }) => {
+export const FundModal: FC<FundModalProps> = ({
+  isOpen,
+  onClose,
+  nftId,
+  nft,
+}) => {
   const { library } = useWeb3React();
   const [fundAmount, setFundAmount] = useState<string>('');
   const fundAmountInWei = ethers.utils.parseUnits(
@@ -23,6 +30,9 @@ export const FundModal: FC<FundModalProps> = ({ isOpen, onClose, nftId }) => {
   );
   const { data: balance } = useCantoBalance();
   const { mutate: fundBond } = useFundBond(onClose);
+  const maxAvailableInWei = BigNumber.from(nft?.info.hardCap || 0).sub(
+    BigNumber.from(nft?.info.raised || 0)
+  );
   return (
     <AnimationLayout open={isOpen} onClose={onClose}>
       <div className="my-8 w-full max-w-md transform space-y-16 overflow-hidden rounded-lg bg-brand-black p-6 text-left shadow-xl transition-all">
@@ -50,6 +60,10 @@ export const FundModal: FC<FundModalProps> = ({ isOpen, onClose, nftId }) => {
                 helper={
                   balance && fundAmountInWei.gt(balance)
                     ? '*Your Balance quantity is not enough'
+                    : fundAmountInWei.gt(maxAvailableInWei)
+                    ? `*Max available quantity is ${ethers.utils.formatEther(
+                        maxAvailableInWei
+                      )}`
                     : undefined
                 }
               />
@@ -69,7 +83,7 @@ export const FundModal: FC<FundModalProps> = ({ isOpen, onClose, nftId }) => {
           text="Fund"
           variant={ButtonVariant.SOLID}
           className="w-full disabled:border-none disabled:bg-[#27272A] disabled:text-zinc-400"
-          disabled={balance && fundAmountInWei.gt(balance)}
+          disabled={balance && fundAmountInWei.gt(balance) || fundAmountInWei.gt(maxAvailableInWei)}
         />
       </div>
     </AnimationLayout>

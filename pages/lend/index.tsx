@@ -74,6 +74,7 @@ export const LendPage = () => {
         isOpen={fundOpen}
         onClose={() => setFundOpen(false)}
         nftId={selectedNftId}
+        nft={fundableNfts?.find((nft) => nft.tokenId.toString() === selectedNftId)}
       />
       <GNB />
       <motion.div
@@ -142,7 +143,9 @@ export const LendPage = () => {
                           <RowTextContents.Text
                             key={[row, col].join('-')}
                             contents={value}
-                            className={value === tokenId ? 'text-zinc-400' : ''}
+                            className={
+                              value === tokenId ? 'text-zinc-400' : 'truncate'
+                            }
                           />
                         );
                       })}
