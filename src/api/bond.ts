@@ -32,17 +32,20 @@ export const startBond = async (bondStartDto: BondStartDto) => {
 export const cancelBond = async (bondCancelDto: BondCancelDto) => {
   const {
     library,
-    data: { nftId },
+    data: { nftId, amount },
   } = bondCancelDto;
   const signer = library.getSigner();
   const contract = new Contract(TURNSTILE_BOND, TURNSTILE_BOND_ABI, signer);
-  const gasUnits = await contract.estimateGas.cancel(nftId).catch((e) => {
-    toastError(JSON.parse(JSON.stringify(e))?.reason || 'error estimateGas');
-  });
+  const gasUnits = await contract.estimateGas
+    .cancel(nftId, { value: amount })
+    .catch((e) => {
+      toastError(JSON.parse(JSON.stringify(e))?.reason || 'error estimateGas');
+    });
   if (!gasUnits) {
     return;
   }
   return contract.cancel(nftId, {
+    value: amount,
     gasLimit: BigNumber.from(gasUnits._hex).toNumber(),
   });
 };

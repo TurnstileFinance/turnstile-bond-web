@@ -55,6 +55,7 @@ export interface BondCancelDto {
   library: ethers.providers.Web3Provider;
   data: {
     nftId: string;
+    amount: string;
   };
 }
 

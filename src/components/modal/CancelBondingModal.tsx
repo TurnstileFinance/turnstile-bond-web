@@ -1,4 +1,5 @@
 import { useWeb3React } from '@web3-react/core';
+import { ethers } from 'ethers';
 import { useCancelBond } from 'src/hooks/bondHooks';
 
 import Button, { ButtonVariant } from '../Button';
@@ -21,6 +22,10 @@ export const CancelBondingModal = ({
 }: CancelBondingModalProps) => {
   const { library } = useWeb3React();
   const { mutate: cancelBond } = useCancelBond(onClose);
+  const receivedAmountInWei = ethers.utils.parseUnits(
+    received.replaceAll?.(',', '') || '0',
+    18
+  );
   return (
     <AnimationLayout open={isOpen} onClose={onClose}>
       <div className="my-8 w-full max-w-md transform space-y-16 overflow-hidden rounded-lg bg-[#0F0F0F] p-7 text-left shadow-xl transition-all">
@@ -54,6 +59,7 @@ export const CancelBondingModal = ({
                   library,
                   data: {
                     nftId,
+                    amount: receivedAmountInWei.toString(),
                   },
                 });
               }}
