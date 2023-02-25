@@ -67,7 +67,7 @@ export default function BorrowPage() {
                     {map(bodingNfts, (nft) => (
                       <NFTCard
                         nft={nft}
-                        key={nft.tokenId}
+                        key={nft.tokenId.toString()}
                         buttonText={
                           approveForAll ? 'Cancel Bonding 🔥' : 'Approve'
                         }
@@ -98,7 +98,7 @@ export default function BorrowPage() {
                     {map(bondableNfts, (nft) => (
                       <NFTCard
                         nft={nft}
-                        key={nft.tokenId}
+                        key={nft.tokenId.toString()}
                         buttonText={
                           approveForAll ? 'Start Bonding →' : 'Approve'
                         }

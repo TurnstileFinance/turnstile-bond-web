@@ -44,7 +44,7 @@ export default function HomePage() {
                 ) : (
                   <div className="grid w-full max-w-screen-lg grid-cols-2 gap-5 sm:grid-cols-3 md:grid-cols-4">
                     {map(bodingNfts, (nft) => (
-                      <NFTCard nft={nft} key={nft.tokenId} />
+                      <NFTCard nft={nft} key={nft.tokenId.toString()} />
                     ))}
                   </div>
                 )}
@@ -61,7 +61,7 @@ export default function HomePage() {
                 ) : (
                   <div className="grid w-full max-w-screen-lg grid-cols-2 gap-5 sm:grid-cols-3 md:grid-cols-4">
                     {map(bondableNfts, (nft) => (
-                      <NFTCard nft={nft} key={nft.tokenId} />
+                      <NFTCard nft={nft} key={nft.tokenId.toString()} />
                     ))}
                   </div>
                 )}
