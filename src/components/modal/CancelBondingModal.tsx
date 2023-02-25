@@ -10,12 +10,14 @@ interface CancelBondingModalProps {
   isOpen: boolean;
   onClose: () => void;
   nftId: string | undefined;
+  received: string;
 }
 
 export const CancelBondingModal = ({
   isOpen,
   onClose,
   nftId,
+  received,
 }: CancelBondingModalProps) => {
   const { library } = useWeb3React();
   const { mutate: cancelBond } = useCancelBond(onClose);
@@ -30,29 +32,42 @@ export const CancelBondingModal = ({
             Do you really want to cancel Bonding <br />
             CSR NFT {nftId}?
           </p>
+          <p className="text-20 font-bold text-brand-1">
+            The amount raised, <br />
+            {received} Canto, will be redeemed.
+          </p>
         </div>
-        <div className="grid grid-cols-2 gap-x-5">
-          <Button
-            text="No"
-            className="w-full border-none bg-[#27272A] text-zinc-400"
-          />
-          <Button
-            onClick={() => {
-              if (!nftId) {
-                toastError('NFT ID is not defined');
-                return;
-              }
-              cancelBond({
-                library,
-                data: {
-                  nftId,
-                },
-              });
-            }}
-            text="Yes"
-            variant={ButtonVariant.OUTLINE}
-            className="w-full disabled:border-none disabled:bg-[#27272A] disabled:text-zinc-400"
-          />
+        <div>
+          <div className="grid grid-cols-2 gap-x-5">
+            <Button
+              text="No"
+              onClick={onClose}
+              className="w-full border-none bg-[#27272A] text-zinc-400"
+            />
+            <Button
+              onClick={() => {
+                if (!nftId) {
+                  toastError('NFT ID is not defined');
+                  return;
+                }
+                cancelBond({
+                  library,
+                  data: {
+                    nftId,
+                  },
+                });
+              }}
+              text="Yes"
+              variant={ButtonVariant.OUTLINE}
+              className="w-full disabled:border-none disabled:bg-[#27272A] disabled:text-zinc-400"
+            />
+          </div>
+          <div className="mt-6 text-center">
+            <p className="text-sm text-red-400">
+              *Warning: If you cancel bonding, this NFT will no longer be
+              bondable since this app is currently at its beta version.
+            </p>
+          </div>
         </div>
       </div>
     </AnimationLayout>

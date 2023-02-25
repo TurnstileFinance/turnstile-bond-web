@@ -17,6 +17,7 @@ import { NFTCARD_STATUS } from 'src/type';
 
 export default function BorrowPage() {
   const [selectNftId, setSelectNftId] = useState<string>();
+  const [selectNftReceived, setSelectNftReceived] = useState<string>('0');
   const [openBorrowFundModal, setOpenBorrowFundModal] = useState(false);
   const [openCancelBondingModal, setOpenCancelBondingModal] = useState(false);
   const { account } = useWeb3React();
@@ -40,6 +41,7 @@ export default function BorrowPage() {
         isOpen={openCancelBondingModal}
         onClose={() => setOpenCancelBondingModal(false)}
         nftId={selectNftId}
+        received={selectNftReceived}
       />
       <BorrowFundModal
         isOpen={openBorrowFundModal}
@@ -75,6 +77,7 @@ export default function BorrowPage() {
                           if (approveForAll) {
                             setOpenCancelBondingModal(true);
                             setSelectNftId(nft.tokenId.toString());
+                            setSelectNftReceived(nft.info.received.toString());
                           } else {
                             setApprovalForAll();
                           }
