@@ -41,7 +41,7 @@ export const NFTCard: FC<NFTCardProps> = ({
           </div>
           <div className="space-y-0.5">
             <p className="prh-4 line-clamp-2">{'Redeemable Canto'}</p>
-            <h3>{ethers.utils.formatEther(accrued)}</h3>
+            <h3 className="truncate">{ethers.utils.formatEther(accrued)}</h3>
           </div>
         </div>
         {buttonText && (
