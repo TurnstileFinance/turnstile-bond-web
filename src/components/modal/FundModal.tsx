@@ -1,6 +1,7 @@
-import { ethers } from 'ethers';
+import { useWeb3React } from '@web3-react/core';
+import { BigNumber, ethers } from 'ethers';
 import { FC, useState } from 'react';
-import { useCantoBalance } from 'src/hooks/bondHooks';
+import { useCantoBalance, useFundBond } from 'src/hooks/bondHooks';
 
 import Button, { ButtonVariant } from '../Button';
 import CountingUnitTextField from '../CountingUnitTextField';
@@ -10,15 +11,18 @@ import { AnimationLayout } from './AnimationLayout';
 interface FundModalProps {
   isOpen: boolean;
   onClose: () => void;
+  nftId: string;
 }
 
-export const FundModal: FC<FundModalProps> = ({ isOpen, onClose }) => {
+export const FundModal: FC<FundModalProps> = ({ isOpen, onClose, nftId }) => {
+  const { library } = useWeb3React();
   const [fundAmount, setFundAmount] = useState<string>('');
-  const fundAmountInWei = ethers.utils.parseEther(
-    !!fundAmount ? fundAmount : '0'
+  const fundAmountInWei = ethers.utils.parseUnits(
+    fundAmount.replaceAll?.(',', '') || '0',
+    18
   );
   const { data: balance } = useCantoBalance();
-  if (!isOpen) return <></>;
+  const { mutate: fundBond } = useFundBond(onClose);
   return (
     <AnimationLayout open={isOpen} onClose={onClose}>
       <div className="my-8 w-full max-w-md transform space-y-16 overflow-hidden rounded-lg bg-brand-black p-6 text-left shadow-xl transition-all">
@@ -43,20 +47,29 @@ export const FundModal: FC<FundModalProps> = ({ isOpen, onClose }) => {
                 countingUnit="CANTO"
                 value={fundAmount}
                 onChange={(e) => setFundAmount(e.target.value)}
-
-                // 내 가진 돈보다 더 입력하면 아래 메시지와 함께 disabled처리
-                // helper="*Your Balance quantity is not enough"
+                helper={
+                  balance && fundAmountInWei.gt(balance)
+                    ? '*Your Balance quantity is not enough'
+                    : undefined
+                }
               />
             </div>
           </div>
         </div>
         <Button
+          onClick={() =>
+            fundBond({
+              library,
+              data: {
+                nftId: BigNumber.from(nftId).toHexString(),
+                amount: fundAmountInWei.toHexString(),
+              },
+            })
+          }
           text="Fund"
           variant={ButtonVariant.SOLID}
           className="w-full disabled:border-none disabled:bg-[#27272A] disabled:text-zinc-400"
           disabled={balance && fundAmountInWei.gt(balance)}
-          // CountingUnitTextField에 숫자가 없을 경우 disabled처리.
-          // disabled
         />
       </div>
     </AnimationLayout>
