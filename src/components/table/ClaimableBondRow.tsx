@@ -15,12 +15,13 @@ const ClaimableBondRow = (props: ClaimableBondRowProps) => {
   const { nftCard } = props;
   const { data: tokenShare } = useBalanceOfToken(nftCard.tokenId.toString());
   const [claimMOpen, setClaimMOpen] = useState<boolean>(false);
+
   const {
     bondStatus,
     bondStatus: { info },
   } = nftCard;
   const divisor = BigNumber.from(10).pow(18);
-  const amount = BigNumber.from(nftCard.amount);
+  const amount = ethers.utils.formatEther(BigNumber.from(nftCard.amount));
   const accured = BigNumber.from(bondStatus.accrued);
   const raised = ethers.BigNumber.from(info.raised);
   const tokenId = BigNumber.from(nftCard.tokenId).toString();
@@ -33,7 +34,12 @@ const ClaimableBondRow = (props: ClaimableBondRowProps) => {
     .toString();
   return (
     <>
-      <ClaimModal isOpen={claimMOpen} onClose={() => setClaimMOpen(false)} />
+      <ClaimModal
+        isOpen={claimMOpen}
+        onClose={() => setClaimMOpen(false)}
+        nftId={tokenId}
+        amount={amount}
+      />
 
       <RowTextContents>
         {[
@@ -41,7 +47,7 @@ const ClaimableBondRow = (props: ClaimableBondRowProps) => {
           ethers.utils.formatEther(totalDebt.toString()),
           ethers.utils.formatEther(accruedReserve),
           userShare,
-          ethers.utils.formatEther(amount),
+          amount,
         ].map((value, index) => (
           <RowTextContents.Text
             key={[tokenId, index].join('-')}
@@ -49,7 +55,7 @@ const ClaimableBondRow = (props: ClaimableBondRowProps) => {
             className={
               value === tokenId
                 ? 'text-zinc-400'
-                : value === 'claimableAmount'
+                : value === amount
                 ? 'text-brand-1'
                 : ''
             }
