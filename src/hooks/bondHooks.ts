@@ -4,7 +4,7 @@ import { BigNumber } from 'ethers';
 import { toast } from 'react-toastify';
 import { TURNSTILE_BOND_ABI } from 'src/abi/turnstileBond';
 import { fetcher } from 'src/api';
-import { cancelBond, fundBond, startBond } from 'src/api/bond';
+import { cancelBond, claimBond, fundBond, startBond } from 'src/api/bond';
 import { toastError } from 'src/components/Toast';
 import { TURNSTILE_BOND } from 'src/constants/address';
 import {
@@ -12,6 +12,7 @@ import {
   BondFundDto,
   BondStartDto,
   ClaimableNftCard,
+  ClaimFundDto,
   NftCard,
 } from 'src/type';
 
@@ -149,6 +150,36 @@ export const useFundBond = (onSuccess: () => void) => {
         .promise(res.wait, {
           pending: 'transaction in progress',
           success: `Fund was successful.`,
+          error: 'transaction is failed 🤯',
+        })
+        .then(() => {
+          onSuccess();
+          queryClient.invalidateQueries([
+            TURNSTILE_BOND,
+            'getClaimableBond',
+            account,
+          ]);
+          queryClient.invalidateQueries([TURNSTILE_BOND, 'currentBondStatus']);
+        });
+    },
+    onError: (e: any) => {
+      toastError(e);
+    },
+  });
+};
+
+export const useClaimBond = (onSuccess: () => void) => {
+  const { account } = useWeb3React();
+  const queryClient = useQueryClient();
+  return useMutation((claimFundDto: ClaimFundDto) => claimBond(claimFundDto), {
+    onSuccess: (res: any) => {
+      if (!res?.wait) {
+        return;
+      }
+      toast
+        .promise(res.wait, {
+          pending: 'transaction in progress',
+          success: `Claim Bond was successful.`,
           error: 'transaction is failed 🤯',
         })
         .then(() => {
