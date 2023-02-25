@@ -1,4 +1,4 @@
-import { ethers } from 'ethers';
+import { BigNumberish, ethers } from 'ethers';
 
 export enum NFTCARD_STATUS {
   NotStarted,
@@ -8,17 +8,36 @@ export enum NFTCARD_STATUS {
 }
 
 export interface NftCard {
-  tokenId: string;
-  accrued: string;
+  tokenId: BigNumberish;
+  accrued: BigNumberish;
   info: {
     status: NFTCARD_STATUS;
-    seller: string;
-    softCap: string;
-    hardCap: string;
-    premium: string;
-    raised: string;
-    received: string;
-    accrued: string;
+    seller: BigNumberish;
+    softCap: BigNumberish;
+    hardCap: BigNumberish;
+    premium: BigNumberish;
+    raised: BigNumberish;
+    received: BigNumberish;
+    accrued: BigNumberish;
+  };
+}
+
+export interface ClaimableNftCard {
+  amount: BigNumberish;
+  tokenId: BigNumberish;
+  bondStatus: {
+    accrued: BigNumberish;
+    tokenId: BigNumberish;
+    info: {
+      accrued: BigNumberish;
+      hardCap: BigNumberish;
+      premium: BigNumberish;
+      raised: BigNumberish;
+      received: BigNumberish;
+      seller: BigNumberish;
+      softCap: BigNumberish;
+      status: NFTCARD_STATUS;
+    };
   };
 }
 
@@ -36,5 +55,13 @@ export interface BondCancelDto {
   library: ethers.providers.Web3Provider;
   data: {
     nftId: string;
+  };
+}
+
+export interface BondFundDto {
+  library: ethers.providers.Web3Provider;
+  data: {
+    nftId: string;
+    amount: string;
   };
 }
