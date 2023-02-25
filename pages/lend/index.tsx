@@ -22,16 +22,16 @@ const CURRENT_BOND_HEADERS = [
     description: 'NFT id',
   },
   {
-    contents: 'minGoal',
+    contents: 'Softcap',
     description: 'canto',
   },
   {
-    contents: 'maxGoal',
+    contents: 'Hardcap',
     description: 'canto',
   },
   {
     contents: 'Funding Status',
-    description: '% to minGoal',
+    description: '% to Softcap',
   },
   {
     contents: 'Premium',
@@ -124,6 +124,7 @@ export const LendPage = () => {
                   const row = index;
                   const { info } = nft;
                   const tokenId = BigNumber.from(nft.tokenId).toString();
+                  const raised = BigNumber.from(info.raised);
                   const softCap = BigNumber.from(info.softCap);
                   const hardCap = BigNumber.from(info.hardCap);
                   const premium = BigNumber.from(info.premium).mul(100);
@@ -133,7 +134,7 @@ export const LendPage = () => {
                         tokenId,
                         ethers.utils.formatEther(softCap.toString()),
                         ethers.utils.formatEther(hardCap.toString()),
-                        `${softCap.mul(100).div(hardCap).toString()}%`,
+                        `${raised.mul(100).div(softCap).toString()}%`,
                         `${ethers.utils.formatEther(premium.toString())}%`,
                       ].map((value, index) => {
                         const col = index;
