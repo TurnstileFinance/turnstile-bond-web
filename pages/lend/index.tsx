@@ -1,19 +1,15 @@
 import { BigNumber, ethers } from 'ethers';
 import { motion } from 'framer-motion';
-import { chain } from 'lodash';
+import { chain, map } from 'lodash';
 import React, { useState } from 'react';
 import BgMotion from 'src/components/BgMotion';
 import Button, { ButtonVariant } from 'src/components/Button';
 import { RowTextContents } from 'src/components/card/RowTextContents';
 import { RowTextHead } from 'src/components/card/RowTextHead';
-import { ClaimModal } from 'src/components/modal/ClaimModal';
 import { FundModal } from 'src/components/modal/FundModal';
 import { GNB } from 'src/components/nav/GNB';
 import MainTabs from 'src/components/nav/MainTabs';
-import {
-  CLOSED_BONDS_CONTAENT_KEYS,
-  CLOSED_BONDS_CONTAENTS_DUMMY,
-} from 'src/dummies';
+import ClaimableBondRow from 'src/components/table/ClaimableBondRow';
 import {
   useCantoBalance,
   useCurrentBondStatus,
@@ -68,14 +64,17 @@ export const CLOSED_BOND_HEADERS = [
 
 export const LendPage = () => {
   const [fundOpen, setFundOpen] = useState<boolean>(false);
-  const [claimMOpen, setClaimMOpen] = useState<boolean>(false);
+  const [selectedNftId, setSelectedNftId] = useState<string>('');
   const { data: balance } = useCantoBalance();
   const { data: fundableNfts } = useCurrentBondStatus();
   const { data: claimableNtfs } = useGetClaimableBond();
   return (
     <>
-      <FundModal isOpen={fundOpen} onClose={() => setFundOpen(false)} />
-      <ClaimModal isOpen={claimMOpen} onClose={() => setClaimMOpen(false)} />
+      <FundModal
+        isOpen={fundOpen}
+        onClose={() => setFundOpen(false)}
+        nftId={selectedNftId}
+      />
       <GNB />
       <motion.div
         layout
@@ -119,7 +118,7 @@ export const LendPage = () => {
                   const { info } = nft;
                   const raised = BigNumber.from(info.raised);
                   const hardCap = BigNumber.from(info.hardCap);
-                  return BigNumber.from(hardCap).gte(raised);
+                  return BigNumber.from(hardCap).gt(raised);
                 })
                 .map((nft, index) => {
                   const row = index;
@@ -150,7 +149,10 @@ export const LendPage = () => {
                         text="Fund"
                         variant={ButtonVariant.OUTLINE}
                         className="flex-1 px-0"
-                        onClick={() => setFundOpen(true)}
+                        onClick={() => {
+                          setFundOpen(true);
+                          setSelectedNftId(tokenId);
+                        }}
                       />
                     </RowTextContents>
                   );
@@ -178,30 +180,8 @@ export const LendPage = () => {
                 No current
               </div>
             ) : (
-              CLOSED_BONDS_CONTAENTS_DUMMY.map((cr_contents) => {
-                return (
-                  <RowTextContents key={cr_contents.id}>
-                    {CLOSED_BONDS_CONTAENT_KEYS.map((key) => (
-                      <RowTextContents.Text
-                        key={cr_contents.id + key}
-                        contents={cr_contents[key]}
-                        className={
-                          key === 'id'
-                            ? 'text-zinc-400'
-                            : key === 'claimableAmount'
-                            ? 'text-brand-1'
-                            : ''
-                        }
-                      />
-                    ))}
-                    <Button
-                      text="Claim"
-                      variant={ButtonVariant.OUTLINE}
-                      className="flex-1 px-0"
-                      onClick={() => setClaimMOpen(true)}
-                    />
-                  </RowTextContents>
-                );
+              map(claimableNtfs, (claimableNft, index) => {
+                return <ClaimableBondRow nftCard={claimableNft} key={index} />;
               })
             )}
           </div>
