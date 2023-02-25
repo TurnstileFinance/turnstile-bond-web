@@ -49,13 +49,13 @@ export default function BorrowPage() {
         nftId={selectNftId}
       />
       <GNB />
-      <motion.div layout className="flex h-full flex-1 flex-col px-4 py-10">
+      <motion.div layout className="mx-auto flex h-full w-full max-w-screen-lg flex-1 flex-col px-4 py-10">
         <BgMotion />
         <MainTabs />
 
         {account && (
           <>
-            <div className="mt-20 flex w-full flex-col items-center justify-center space-y-10 pl-40">
+            <div className="mt-20 flex w-full flex-col items-center justify-center space-y-10">
               <div className="flex w-full flex-col justify-center space-y-6">
                 <span className="text-24 font-bold text-white">
                   Bonding NFTs ({bodingNfts.length})
