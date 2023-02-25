@@ -37,25 +37,35 @@ export const ClaimModal: FC<ClaimModalProps> = ({
             <p className="prh-1">Claimable Amount</p>
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-x-5">
-          <Button
-            onClick={onClose}
-            text="Cancel"
-            className="w-full border-none bg-[#27272A] text-zinc-400"
-          />
-          <Button
-            onClick={() =>
-              claimBond({
-                library,
-                data: {
-                  nftId,
-                },
-              })
-            }
-            text="Claim"
-            variant={ButtonVariant.OUTLINE}
-            className="w-full disabled:border-none disabled:bg-[#27272A] disabled:text-zinc-400"
-          />
+        <div>
+          <div className="grid grid-cols-2 gap-x-5">
+            <Button
+              onClick={onClose}
+              text="Cancel"
+              className="w-full border-none bg-[#27272A] text-zinc-400"
+            />
+            <Button
+              onClick={() =>
+                claimBond({
+                  library,
+                  data: {
+                    nftId,
+                  },
+                })
+              }
+              text="Claim"
+              variant={ButtonVariant.OUTLINE}
+              className="w-full disabled:border-none disabled:bg-[#27272A] disabled:text-zinc-400"
+            />
+          </div>
+          <div className="text-center mt-6">
+            <p className="text-sm text-red-400">
+              *Warning: If you claim your fund once, you can not claim it out
+              again. Please check the amount of Canto and the funding premium
+              you invested in and see if the amount you take to claim is
+              correct.
+            </p>
+          </div>
         </div>
       </div>
     </AnimationLayout>
