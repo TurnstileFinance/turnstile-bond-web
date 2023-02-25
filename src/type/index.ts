@@ -65,3 +65,10 @@ export interface BondFundDto {
     amount: string;
   };
 }
+
+export interface ClaimFundDto {
+  library: ethers.providers.Web3Provider;
+  data: {
+    nftId: string;
+  };
+}
