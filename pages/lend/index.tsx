@@ -85,7 +85,7 @@ export const LendPage = () => {
 
         <div className="pt-10">
           <div className="mb-5 flex items-end justify-between">
-            <h3>Current Bonds</h3>
+            <h3>Fundable Bonds</h3>
             <div>
               <p className="prh-1 text-gray-500">Your Balance</p>
               <div className="flex items-end space-x-1 text-brand-1">
@@ -163,7 +163,7 @@ export const LendPage = () => {
         </div>
 
         <div>
-          <h3 className="mb-5">Closed Bonds</h3>
+          <h3 className="mb-5">Claimable Bonds</h3>
           <RowTextHead>
             {CLOSED_BOND_HEADERS.map((header) => (
               <RowTextHead.Text
