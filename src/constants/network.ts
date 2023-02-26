@@ -38,4 +38,15 @@ export const networkParams: {
     rpcUrls: ['https://eth.plexnode.wtf/'],
     blockExplorerUrls: ['https://testnet-explorer.canto.neobase.one/'],
   },
+  '0x7a69': {
+    chainId: '0x7a69',
+    chainName: 'canto-dev-ep-hybiscus',
+    nativeCurrency: {
+      name: 'CANTO',
+      symbol: 'CANTO',
+      decimals: 18,
+    },
+    rpcUrls: ['https://canto.dev.martian.link'],
+    blockExplorerUrls: ['https://testnet-explorer.canto.neobase.one/'],
+  },
 };
