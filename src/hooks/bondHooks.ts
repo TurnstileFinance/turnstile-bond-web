@@ -149,7 +149,7 @@ export const useFundBond = (onSuccess: () => void) => {
       toast
         .promise(res.wait, {
           pending: 'transaction in progress',
-          success: `Fund was successful.`,
+          success: `Funding successful`,
           error: 'transaction is failed 🤯',
         })
         .then(() => {
@@ -179,7 +179,7 @@ export const useClaimBond = (onSuccess: () => void) => {
       toast
         .promise(res.wait, {
           pending: 'transaction in progress',
-          success: `Claim Bond was successful.`,
+          success: `Claiming successful`,
           error: 'transaction is failed 🤯',
         })
         .then(() => {
