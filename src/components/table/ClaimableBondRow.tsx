@@ -47,7 +47,7 @@ const ClaimableBondRow = (props: ClaimableBondRowProps) => {
           ethers.utils.formatEther(totalDebt.toString()),
           ethers.utils.formatEther(accruedReserve),
           userShare,
-          amount,
+          parseFloat(amount).toFixed(6),
         ].map((value, index) => (
           <RowTextContents.Text
             key={[tokenId, index].join('-')}
@@ -55,7 +55,7 @@ const ClaimableBondRow = (props: ClaimableBondRowProps) => {
             className={
               value === tokenId
                 ? 'text-zinc-400'
-                : value === amount
+                : value === parseFloat(amount).toFixed(6)
                 ? 'truncate text-brand-1'
                 : 'truncate'
             }
