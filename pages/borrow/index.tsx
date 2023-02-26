@@ -3,24 +3,21 @@ import { motion } from 'framer-motion';
 import { filter, map } from 'lodash';
 import { useState } from 'react';
 import BgMotion from 'src/components/BgMotion';
-import { NFTCard } from 'src/components/card/NFTCard';
+import BorrowNFTCard from 'src/components/card/BorrowNFTCard';
 import { BorrowFundModal } from 'src/components/modal/BorrowFundModal';
 import { CancelBondingModal } from 'src/components/modal/CancelBondingModal';
 import { GNB } from 'src/components/nav/GNB';
 import MainTabs from 'src/components/nav/MainTabs';
 import { useSellerBondStatus } from 'src/hooks/bondHooks';
-import {
-  useIsApproveForAll,
-  useSetApprovalForAll,
-} from 'src/hooks/turnstileHooks';
-import { NFTCARD_STATUS } from 'src/type';
+import { useApprove, useIsApproveForAll } from 'src/hooks/turnstileHooks';
+import { NftCard, NFTCARD_STATUS } from 'src/type';
 
 export default function BorrowPage() {
   const [selectNftId, setSelectNftId] = useState<string>();
   const [selectNftReceived, setSelectNftReceived] = useState<string>('0');
   const [openBorrowFundModal, setOpenBorrowFundModal] = useState(false);
   const [openCancelBondingModal, setOpenCancelBondingModal] = useState(false);
-  const { account } = useWeb3React();
+  const { account, library } = useWeb3React();
   const { data: nfts } = useSellerBondStatus();
   const { data: approveForAll } = useIsApproveForAll();
   const bodingNfts = filter(
@@ -33,7 +30,36 @@ export default function BorrowPage() {
     nfts,
     (nft) => nft.info.status === NFTCARD_STATUS.NotStarted
   );
-  const { mutate: setApprovalForAll } = useSetApprovalForAll();
+  const { mutate: approve } = useApprove();
+
+  const onClickCancleBorrowCard = (isApprove: boolean, nft: NftCard) => {
+    if (isApprove) {
+      setOpenCancelBondingModal(true);
+      setSelectNftId(nft.tokenId.toString());
+      setSelectNftReceived(nft.info.received.toString());
+    } else {
+      approve({
+        library,
+        data: {
+          tokenId: nft.tokenId.toString(),
+        },
+      });
+    }
+  };
+
+  const onClickBorrowCard = (isApprove: boolean, nft: NftCard) => {
+    if (isApprove) {
+      setOpenBorrowFundModal(true);
+      setSelectNftId(nft.tokenId.toString());
+    } else {
+      approve({
+        library,
+        data: {
+          tokenId: nft.tokenId.toString(),
+        },
+      });
+    }
+  };
 
   return (
     <>
@@ -49,7 +75,10 @@ export default function BorrowPage() {
         nftId={selectNftId}
       />
       <GNB />
-      <motion.div layout className="mx-auto flex h-full w-full max-w-screen-lg flex-1 flex-col px-4 py-10">
+      <motion.div
+        layout
+        className="mx-auto flex h-full w-full max-w-screen-lg flex-1 flex-col px-4 py-10"
+      >
         <BgMotion />
         <MainTabs />
 
@@ -67,21 +96,12 @@ export default function BorrowPage() {
                 ) : (
                   <div className="grid w-full max-w-screen-lg grid-cols-2 gap-5 sm:grid-cols-3 md:grid-cols-4">
                     {map(bodingNfts, (nft) => (
-                      <NFTCard
-                        nft={nft}
+                      <BorrowNFTCard
                         key={nft.tokenId.toString()}
-                        buttonText={
-                          approveForAll ? 'Cancel Bonding 🔥' : 'Approve'
+                        nft={nft}
+                        onClick={(isApproved: boolean) =>
+                          onClickCancleBorrowCard(isApproved, nft)
                         }
-                        onClick={() => {
-                          if (approveForAll) {
-                            setOpenCancelBondingModal(true);
-                            setSelectNftId(nft.tokenId.toString());
-                            setSelectNftReceived(nft.info.received.toString());
-                          } else {
-                            setApprovalForAll();
-                          }
-                        }}
                       />
                     ))}
                   </div>
@@ -99,20 +119,12 @@ export default function BorrowPage() {
                 ) : (
                   <div className="grid w-full max-w-screen-lg grid-cols-2 gap-5 sm:grid-cols-3 md:grid-cols-4">
                     {map(bondableNfts, (nft) => (
-                      <NFTCard
-                        nft={nft}
+                      <BorrowNFTCard
                         key={nft.tokenId.toString()}
-                        buttonText={
-                          approveForAll ? 'Start Bonding →' : 'Approve'
+                        nft={nft}
+                        onClick={(isApproved: boolean) =>
+                          onClickBorrowCard(isApproved, nft)
                         }
-                        onClick={() => {
-                          if (approveForAll) {
-                            setOpenBorrowFundModal(true);
-                            setSelectNftId(nft.tokenId.toString());
-                          } else {
-                            setApprovalForAll();
-                          }
-                        }}
                       />
                     ))}
                   </div>
