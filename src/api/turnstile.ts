@@ -10,7 +10,7 @@ export const setApprovalForAll = async (
   const signer = library.getSigner();
   const contract = new Contract(TURNSTILE, TURNSTILE_ABI, signer);
   const gasUnits = await contract.estimateGas
-    .setApprovalForAll(TURNSTILE, true)
+    .setApprovalForAll(TURNSTILE_BOND, true)
     .catch((e) => {
       toastError(JSON.parse(JSON.stringify(e))?.reason || 'error estimateGas');
     });
@@ -31,7 +31,7 @@ export const approve = async (approveDto: ApproveDto) => {
   const signer = library.getSigner();
   const contract = new Contract(TURNSTILE, TURNSTILE_ABI, signer);
   const gasUnits = await contract.estimateGas
-    .approve(TURNSTILE, tokenId)
+    .approve(TURNSTILE_BOND, tokenId)
     .catch((e) => {
       toastError(JSON.parse(JSON.stringify(e))?.reason || 'error estimateGas');
     });
