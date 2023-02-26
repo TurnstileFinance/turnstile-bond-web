@@ -1,7 +1,7 @@
 import { BigNumber, Contract, ethers } from 'ethers';
 import { TURNSTILE_ABI } from 'src/abi/turnstile';
 import { toastError } from 'src/components/Toast';
-import { TURNSTILE } from 'src/constants/address';
+import { TURNSTILE, TURNSTILE_BOND } from 'src/constants/address';
 import { ApproveDto } from 'src/type';
 
 export const setApprovalForAll = async (
@@ -18,7 +18,7 @@ export const setApprovalForAll = async (
     toastError('error estimateGas');
     return;
   }
-  return contract.setApprovalForAll(TURNSTILE, true, {
+  return contract.setApprovalForAll(TURNSTILE_BOND, true, {
     gasLimit: BigNumber.from(gasUnits._hex).toNumber(),
   });
 };
@@ -39,7 +39,7 @@ export const approve = async (approveDto: ApproveDto) => {
     toastError('error estimateGas');
     return;
   }
-  return contract.approve(TURNSTILE, tokenId, {
+  return contract.approve(TURNSTILE_BOND, tokenId, {
     gasLimit: BigNumber.from(gasUnits._hex).toNumber(),
   });
 };
