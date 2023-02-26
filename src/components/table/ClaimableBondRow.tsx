@@ -25,7 +25,7 @@ const ClaimableBondRow = (props: ClaimableBondRowProps) => {
   const accured = BigNumber.from(bondStatus.accrued);
   const raised = ethers.BigNumber.from(info.raised);
   const tokenId = BigNumber.from(nftCard.tokenId).toString();
-  const premium = BigNumber.from(info.premium).mul(100);
+  const premium = BigNumber.from(info.premium);
   const totalDebt = raised.add(raised.mul(premium).div(divisor));
   const accruedReserve = accured.div(totalDebt).mul(100).toString();
   const userShare = BigNumber.from(tokenShare || '0')
