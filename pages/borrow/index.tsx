@@ -108,6 +108,7 @@ export default function BorrowPage() {
                         }
                         onClick={() => onClickCancleBorrowCard(true, nft)}
                         isCancel={nft.info.raised > nft.info.softCap}
+                        text="Redeemable Canto"
                       />
                     ))}
                   </div>

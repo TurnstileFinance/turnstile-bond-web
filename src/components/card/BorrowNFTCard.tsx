@@ -19,6 +19,7 @@ const BorrowNFTCard = ({ nft, onClick }: BorrowNFTCardProps) => {
       key={nft.tokenId.toString()}
       buttonText={isApproved ? 'Start Bonding 🔥' : 'Approve'}
       onClick={() => onClick(isApproved)}
+      text="Accrued Canto"
     />
   );
 };

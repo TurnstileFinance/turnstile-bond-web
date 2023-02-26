@@ -68,13 +68,16 @@ export const LendPage = () => {
   const { data: balance } = useCantoBalance();
   const { data: fundableNfts } = useCurrentBondStatus();
   const { data: claimableNtfs } = useGetClaimableBond();
+
   return (
     <>
       <FundModal
         isOpen={fundOpen}
         onClose={() => setFundOpen(false)}
         nftId={selectedNftId}
-        nft={fundableNfts?.find((nft) => nft.tokenId.toString() === selectedNftId)}
+        nft={fundableNfts?.find(
+          (nft) => nft.tokenId.toString() === selectedNftId
+        )}
       />
       <GNB />
       <motion.div

@@ -9,6 +9,7 @@ import Button from '../Button';
 
 interface NFTCardProps {
   buttonText?: string;
+  text: string;
   isCancel?: boolean;
   onClick?: () => void;
   nft: NftCard;
@@ -16,6 +17,7 @@ interface NFTCardProps {
 
 export const NFTCard: FC<NFTCardProps> = ({
   buttonText,
+  text,
   isCancel = false,
   nft,
   onClick,
@@ -40,7 +42,7 @@ export const NFTCard: FC<NFTCardProps> = ({
             <Black_CircleSVG className="bl tran z-1 0 rounded-t-full shadow-[0_0_40px_13px_rgba(82,82,82,0.74)] transition-all group-hover:shadow-[0_0_40px_13px_rgba(191,255,165,0.74)]" />
           </div>
           <div className="space-y-0.5">
-            <p className="prh-4 line-clamp-2">{'Redeemable Canto'}</p>
+            <p className="prh-4 line-clamp-2">{text}</p>
             <h3 className="truncate">{ethers.utils.formatEther(accrued)}</h3>
           </div>
         </div>
