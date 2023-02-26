@@ -45,7 +45,7 @@ const ClaimableBondRow = (props: ClaimableBondRowProps) => {
         {[
           tokenId,
           ethers.utils.formatEther(totalDebt.toString()),
-          ethers.utils.formatEther(accruedReserve),
+          parseFloat(ethers.utils.formatEther(accruedReserve)).toFixed(6),
           userShare,
           parseFloat(amount).toFixed(6),
         ].map((value, index) => (
@@ -53,9 +53,9 @@ const ClaimableBondRow = (props: ClaimableBondRowProps) => {
             key={[tokenId, index].join('-')}
             contents={value}
             className={
-              value === tokenId
+              index === 0
                 ? 'text-zinc-400'
-                : value === parseFloat(amount).toFixed(6)
+                : index === 4
                 ? 'truncate text-brand-1'
                 : 'truncate'
             }
