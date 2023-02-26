@@ -27,7 +27,8 @@ const ClaimableBondRow = (props: ClaimableBondRowProps) => {
   const tokenId = BigNumber.from(nftCard.tokenId).toString();
   const premium = BigNumber.from(info.premium);
   const totalDebt = raised.add(raised.mul(premium).div(divisor));
-  const accruedReserve = accured.div(totalDebt).mul(100).toString();
+  const accruedReserve = accured.mul(10000).div(totalDebt).toString();
+
   const userShare = BigNumber.from(tokenShare || '0')
     .mul(100)
     .div(raised)
@@ -45,7 +46,7 @@ const ClaimableBondRow = (props: ClaimableBondRowProps) => {
         {[
           tokenId,
           ethers.utils.formatEther(totalDebt.toString()),
-          parseFloat(ethers.utils.formatEther(accruedReserve)).toFixed(6),
+          `${(parseFloat(accruedReserve) / 100).toFixed(2)}%`,
           userShare,
           parseFloat(amount).toFixed(6),
         ].map((value, index) => (
