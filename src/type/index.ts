@@ -73,3 +73,10 @@ export interface ClaimFundDto {
     nftId: string;
   };
 }
+
+export interface ApproveDto {
+  library: ethers.providers.Web3Provider;
+  data: {
+    tokenId: string;
+  };
+}
