@@ -71,7 +71,7 @@ export const useBondStart = (onSuccess: () => void) => {
       toast
         .promise(res.wait, {
           pending: 'transaction in progress',
-          success: `Start Bond was successful.`,
+          success: `Starting successful`,
           error: 'transaction is failed 🤯',
         })
         .then(() => {
@@ -103,7 +103,7 @@ export const useCancelBond = (onSuccess: () => void) => {
         toast
           .promise(res.wait, {
             pending: 'transaction in progress',
-            success: `Cancel Bond was successful.`,
+            success: `Canceling successful`,
             error: 'transaction is failed 🤯',
           })
           .then(() => {
