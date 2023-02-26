@@ -1,4 +1,4 @@
-import { TURNSTILE } from 'src/constants/address';
+import { TURNSTILE_BOND } from 'src/constants/address';
 import { useIsApprove } from 'src/hooks/turnstileHooks';
 import { NftCard } from 'src/type';
 
@@ -11,7 +11,7 @@ interface BorrowNFTCardProps {
 
 const BorrowNFTCard = ({ nft, onClick }: BorrowNFTCardProps) => {
   const { data } = useIsApprove(nft.tokenId.toString());
-  const isApproved = data === TURNSTILE;
+  const isApproved = data === TURNSTILE_BOND;
 
   return (
     <NFTCard
