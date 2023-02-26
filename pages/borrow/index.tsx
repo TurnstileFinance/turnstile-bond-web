@@ -4,6 +4,7 @@ import { filter, map } from 'lodash';
 import { useState } from 'react';
 import BgMotion from 'src/components/BgMotion';
 import BorrowNFTCard from 'src/components/card/BorrowNFTCard';
+import { NFTCard } from 'src/components/card/NFTCard';
 import { BorrowFundModal } from 'src/components/modal/BorrowFundModal';
 import { CancelBondingModal } from 'src/components/modal/CancelBondingModal';
 import { GNB } from 'src/components/nav/GNB';
@@ -33,6 +34,7 @@ export default function BorrowPage() {
   const { mutate: approve } = useApprove();
 
   const onClickCancleBorrowCard = (isApprove: boolean, nft: NftCard) => {
+    if (nft.info.raised > nft.info.softCap) return;
     if (isApprove) {
       setOpenCancelBondingModal(true);
       setSelectNftId(nft.tokenId.toString());
@@ -96,12 +98,16 @@ export default function BorrowPage() {
                 ) : (
                   <div className="grid w-full max-w-screen-lg grid-cols-2 gap-5 sm:grid-cols-3 md:grid-cols-4">
                     {map(bodingNfts, (nft) => (
-                      <BorrowNFTCard
-                        key={nft.tokenId.toString()}
+                      <NFTCard
                         nft={nft}
-                        onClick={(isApproved: boolean) =>
-                          onClickCancleBorrowCard(isApproved, nft)
+                        key={nft.tokenId.toString()}
+                        buttonText={
+                          nft.info.raised > nft.info.softCap
+                            ? 'Ongoing Bond 🔥'
+                            : 'Cancel Bonding 🔥'
                         }
+                        onClick={() => onClickCancleBorrowCard(true, nft)}
+                        isCancel={nft.info.raised > nft.info.softCap}
                       />
                     ))}
                   </div>
